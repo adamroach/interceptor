@@ -153,6 +153,7 @@ func (n *ResponderInterceptor) resendPackets(nack *rtcp.TransportLayerNack) {
 
 	for i := range nack.Nacks {
 		nack.Nacks[i].Range(func(seq uint16) bool {
+			n.log.Tracef("resending nacked packet %d", seq)
 			stream.rtpBufferMutex.Lock()
 			defer stream.rtpBufferMutex.Unlock()
 
